@@ -11,13 +11,28 @@ df = df.sort_values("Number of Jobs", ascending=False).reset_index()
 my_plot = sns.barplot(df, x="Location", y="Number of Jobs")
 my_plot.set_xticklabels(my_plot.get_xticklabels(), rotation=-30)
 plt.title("Job postings per city")
-plt.show()
-#plt.savefig("fig1.png")
+#plt.show()
+plt.savefig("fig1.png")
 
 # Build second bar chart with Programming Languages by salary
 
 df = pd.read_csv("../../../Week1/LAB4/popular-languages.csv").set_index("Language")
-df
+#df = df.sort_values("Average Annual Salary", ascending=False).reset_index()
+#print(df)
+column=[]
+for item in df["Average Annual Salary"]:
+	temp=""
+	for char in item:
+		if char in ["$", ","]:
+			continue
+		temp+=char
+	column.append(int(temp))
+df["Average Annual Salary"] = column
 df = df.sort_values("Average Annual Salary", ascending=False).reset_index()
+#print(df)
 
-print(df)
+my_plot = sns.barplot(df, x="Language", y="Average Annual Salary")
+plt.ylabel("$ USD")
+plt.title("Average Annual Salary per Programming Language")
+#plt.show()
+plt.savefig("fig2.png")
